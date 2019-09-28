@@ -1,10 +1,12 @@
-#!/bin/bash
+#!/bin/sh
 
 INIT_DIR=${INIT_DIR:=/mysql-init}
 MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:=root}
 MYSQL_DATABASE=${MYSQL_DATABASE:=user}
 MYSQL_USER=${MYSQL_USER:=user}
 MYSQL_PASSWORD=${MYSQL_PASSWORD:=userpass}
+
+mkdir -p "$INIT_DIR"
 
 echo "Generating 5.5-plus set password script."
 cat >"$INIT_DIR/set-passwords-5.5plus.sql" <<EOF
