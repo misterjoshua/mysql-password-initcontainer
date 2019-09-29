@@ -7,9 +7,9 @@ install:
 - chmod +x ./semver.sh
 
 script:
+- set -e
+- export VERSION=`git describe --tags` MAJOR=0 MINOR=0 PATCH=0 SPECIAL=""
 - |
-  set -e
-  export VERSION=`git describe --tags` MAJOR=0 MINOR=0 PATCH=0 SPECIAL=""
   source ./semver.sh
   semverParseInto "$VERSION" MAJOR MINOR PATCH SPECIAL
 - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
