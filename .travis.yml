@@ -7,6 +7,7 @@ install:
 - chmod +x ./semver.sh
 
 script:
+- set -e
 - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 - |
   source ./semver.sh
