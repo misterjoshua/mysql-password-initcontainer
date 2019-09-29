@@ -1,0 +1,31 @@
+language: generic
+services:
+- docker
+
+install:
+- wget https://raw.githubusercontent.com/cloudflare/semver_bash/master/semver.sh
+- chmod +x ./semver.sh
+
+script:
+- echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+- |
+  source ./semver.sh
+  export VERSION=`git describe --tags`
+  export MAJOR=0
+  export MINOR=0
+  export PATCH=0
+  export SPECIAL=""
+  semverParseInto "$VERSION" MAJOR MINOR PATCH SPECIAL
+- docker build -t $DOCKER_REPO:latest
+- docker push $DOCKER_REPO:latest
+- docker tag $DOCKER_REPO:latest $DOCKER_REPO:$VERSION
+- docker push $DOCKER_REPO:$VERSION
+- |
+  if [ -z "$SPECIAL" ]; then
+    docker tag $DOCKER_REPO:latest $DOCKER_REPO:$MAJOR.$MINOR.$PATCH
+    docker push $DOCKER_REPO:$MAJOR.$MINOR.$PATCH
+    docker tag $DOCKER_REPO:latest $DOCKER_REPO:$MAJOR.$MINOR
+    docker push $DOCKER_REPO:$MAJOR.$MINOR
+    docker tag $DOCKER_REPO:latest $DOCKER_REPO:$MAJOR
+    docker push $DOCKER_REPO:$MAJOR
+  fi
