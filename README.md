@@ -14,13 +14,15 @@ This image uses environment variables for its configuration. Here is a brief des
 | `MYSQL_DATABASE` | The name of the database that the secondary user is granted `ALL` privileges on. | *user* |
 
 ## Generated SQL files
+Once the init container has finished, it will output SQL to `/mysql-init/`. To access the generated SQL in another container, you can mount an `emptyDir` at `/mysql-init/` on this image's container and share that volume with another container on the pod or task that contains a `mysqld`.
+
 | File | Description |
 | ---- | ----------- |
-| `set-passwords-5.5plus.sql` | This file sets passwords for root and the secondary user for MySQL 5.5 and 5.6. |
-| `set-passwords-5.7plus.sql` | This file works with MySQL 5.7 and 8.0 |
+| `/mysql-init/set-passwords-5.5plus.sql` | This file sets passwords for root and the secondary user for MySQL 5.5 and 5.6. |
+| `/mysql-init/set-passwords-5.7plus.sql` | This file works with MySQL 5.7 and 8.0 |
 
 ## Kubernetes Pod Example
-In Kubernetes, you could add this image as an `initContainer`. In the example below, the MySQL root and user credentials are provided in a secret that was created with this command:
+In Kubernetes, you can add this image as an `initContainer`. In the example below, the MySQL root and user credentials are available through a secret resource that is created separately:
 
 ```
 apiVersion: apps/v1
