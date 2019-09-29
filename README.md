@@ -1,4 +1,4 @@
-<img src="https://img.shields.io/docker/cloud/automated/wheatstalk/mysql-password-initcontainer" alt="Automated Build"> <img src="https://img.shields.io/docker/cloud/build/wheatstalk/mysql-password-initcontainer" alt="Build Status">
+<img src="https://img.shields.io/travis/misterjoshua/mysql-password-initcontainer" alt="Automated Build">
 
 # MySQL Password Init Container
 MySQL Password Init Container generates SQL files that set MySQL user passwords. The SQL we generate is useful to ensure that a MySQL instance has specific usernames and passwords through mysqld's `--init-file` argument, so that the passwords are set at least every time MySQL starts.
