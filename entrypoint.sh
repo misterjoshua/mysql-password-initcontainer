@@ -21,12 +21,12 @@ EOF
 echo "Generating 5.7-plus set password script."
 cat >"$INIT_DIR/set-passwords-5.7plus.sql" <<EOF
 CREATE USER IF NOT EXISTS 'root'@'localhost', 'root'@'%';
-ALTER USER 'root'@'localhost' IDENTIFIED BY '$MYSQL_ROOT_PASSWORD';
-ALTER USER 'root'@'%' IDENTIFIED BY '$MYSQL_ROOT_PASSWORD';
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '$MYSQL_ROOT_PASSWORD';
+ALTER USER 'root'@'%' IDENTIFIED mysql_native_password BY '$MYSQL_ROOT_PASSWORD';
 
 CREATE USER IF NOT EXISTS '$MYSQL_USER'@'localhost', '$MYSQL_USER'@'%';
-ALTER USER '$MYSQL_USER'@'localhost' IDENTIFIED BY '$MYSQL_PASSWORD';
-ALTER USER '$MYSQL_USER'@'%' IDENTIFIED BY '$MYSQL_PASSWORD';
+ALTER USER '$MYSQL_USER'@'localhost' IDENTIFIED mysql_native_password BY '$MYSQL_PASSWORD';
+ALTER USER '$MYSQL_USER'@'%' IDENTIFIED mysql_native_password BY '$MYSQL_PASSWORD';
 
 GRANT ALL ON \`$MYSQL_DATABASE\`.* TO '$MYSQL_USER'@'localhost', '$MYSQL_USER'@'%';
 FLUSH PRIVILEGES;
